@@ -170,7 +170,7 @@ on early-fs
     mkdir /cache 0771 system cache
 
 # EFS
-	 mkdir /efs 0775 radio radio
+	 mkdir /efs 0775 system system
 
 # ===============================================================================
 on fs
@@ -192,9 +192,7 @@ on fs
     mount ext4 /dev/block/stl10 /dbdata  wait nosuid nodev noatime nodiratime noauto_da_alloc
 
 # EFS
-    mount yaffs2 mtd@efs /efs noatime nosuid nodev
-    chmod 770 /efs/bluetooth
-    chmod 770 /efs/imei
+    mount rfs /dev/block/stl3 /efs nosuid nodev check=no
 
 # Cache
     mount ext4 /dev/block/stl11 /cache nosuid nodev noatime nodiratime errors=continue nobh data=writeback barrier=0 noauto_da_alloc
@@ -648,7 +646,7 @@ service dnsmasq /system/bin/logwrapper /system/bin/dnsmasq -d
 
 service ril-daemon /system/bin/rild -l /system/lib/libsec-ril.so -- -d /dev/ttyS0
     class main
-    socket rild stream 660 root radio
+    socket rild stream 660 root radio system
     socket rild-debug stream 660 radio system
     user root
     group radio cache inet misc audio
