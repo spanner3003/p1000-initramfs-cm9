@@ -606,11 +606,11 @@ service pvrsrvinit /system/bin/pvrsrvinit
    group root
    oneshot
 
-service bdaddr /system/bin/bdaddr_read
-    class main
-    user root
-    disabled
-    oneshot
+#service bdaddr /system/bin/bdaddr_read
+#    class main
+#    user root
+#    disabled
+#    oneshot
 
 on property:init.svc.bootanim=running
     start bdaddr
@@ -740,10 +740,10 @@ service ifcfg_eth0 /system/bin/ifconfig eth0 up
     disabled
     oneshot
 
-service wlandutservice /system/bin/wlandutservice
-	class main
-    disabled
-    oneshot
+#service wlandutservice /system/bin/wlandutservice
+#	class main
+#    disabled
+#    oneshot
 
 service hciattach /system/bin/brcm_patchram_plus --enable_hci --pcm_role slave --baudrate 3000000 \
 	 --patchram /system/bin/BCM4329B1_002.002.023.0534.0590.hcd /dev/s3c2410_serial0
@@ -836,7 +836,7 @@ service dumpstate /system/bin/dumpstate -s
     disabled
     oneshot
 
-service 3g_route /system/bin/route add default dev pdp0
+service 3g_route /system/xbin/route add default dev pdp0
     class main
     disabled
     oneshot
