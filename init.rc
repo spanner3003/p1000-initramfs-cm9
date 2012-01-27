@@ -629,10 +629,10 @@ service servicemanager /system/bin/servicemanager
     onrestart restart zygote
     onrestart restart media
 
-#service tvout /system/bin/tvoutserver
-#	class main
-#	user system
-#	group graphics
+service tvout /system/bin/tvoutserver
+	class main
+	user system
+	group graphics
 
 service tvouthack /system/bin/tvouthack
 	class main
