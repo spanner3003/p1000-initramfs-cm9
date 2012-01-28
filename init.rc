@@ -25,10 +25,11 @@ loglevel 9
     export ANDROID_ROOT /system
     export ANDROID_ASSETS /system/app
     export ANDROID_DATA /data
-    export PHONE_STORAGE /mnt/sdcard
-    export EXTERNAL_STORAGE /mnt/emmc
+    export PHONE_STORAGE /mnt/emmc
+    export EXTERNAL_STORAGE /mnt/sdcard
     export ASEC_MOUNTPOINT /mnt/asec
     export SD_EXT_DIRECTORY /sd-ext
+    export SECONDARY_STORAGE /mnt/emmc
     export USBHOST_STORAGE /mnt/sdcard/otg_disk
     export BOOTCLASSPATH /system/framework/core.jar:/system/framework/core-junit.jar:/system/framework/bouncycastle.jar:/system/framework/ext.jar:/system/framework/framework.jar:/system/framework/android.policy.jar:/system/framework/services.jar:/system/framework/apache-xml.jar:/system/framework/filterfw.jar
     export LOOP_MOUNTPOINT /mnt/obb 
