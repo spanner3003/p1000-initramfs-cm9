@@ -215,6 +215,9 @@ on post-fs
 # Remove /sbin/sh so that "adb install" can work properly
     exec /sbin/setupenv.sh
 
+# Symlinks for samsung RIL
+    symlink /radio/modem.bin /dev/block/bml12
+
 # Data
 	chown system system /data
 	chmod 0771 /data
@@ -323,6 +326,8 @@ on post-fs
     chmod 0775 /efs
     mkdir /data/radio 0775 radio radio
     mkdir /data/radio/log 0775 radio radio
+    chmod 770 /efs/bluetooth
+    chmod 770 /efs/imei
 
 # Create resource-cache and double-check the perms
     mkdir /data/resource-cache 0771 system system
@@ -447,8 +452,10 @@ on boot
 # Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
     setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
-    setprop net.tcp.buffersize.wifi    4095,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.wifi    524288,1048576,2097152,262144,524288,1048576
+    setprop net.tcp.buffersize.lte     524288,1048576,2097152,262144,524288,1048576
     setprop net.tcp.buffersize.umts    4094,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.hspa    4094,87380,262144,4096,16384,262144
     setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
     setprop net.tcp.buffersize.gprs    4092,8760,11680,4096,8760,11680
 
@@ -528,12 +535,6 @@ write /sys/class/android_usb/android0/enable 1
     class_start core
     class_start main
 
-on nonencrypted
-    class_start late_start
-
-on charger
-    class_start charger
-
 on property:vold.decrypt=trigger_reset_main
     class_reset main
 
@@ -548,10 +549,8 @@ on property:vold.decrypt=trigger_restart_min_framework
 
 on property:vold.decrypt=trigger_restart_framework
     class_start main
-    class_start late_start
 
 on property:vold.decrypt=trigger_shutdown_framework
-    class_reset late_start
     class_reset main
 
 # ===============================================================================
@@ -620,6 +619,7 @@ on property:init.svc.bootanim=running
 service servicemanager /system/bin/servicemanager
     class core
     user system
+    group system
     critical
     onrestart restart zygote
     onrestart restart media
@@ -627,7 +627,7 @@ service servicemanager /system/bin/servicemanager
     onrestart restart drm
 
 service tvout /system/bin/tvoutserver
-    class late_start
+    class main
 	user system
 	group graphics
 
