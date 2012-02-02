@@ -635,6 +635,7 @@ service tvouthack /system/bin/tvouthack
 	class main
     user root system
     group system graphics
+    disabled
 
 service vold /system/bin/vold
     class core
